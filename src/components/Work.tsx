@@ -64,10 +64,11 @@ const Work = () => {
         const projectCards = gsap.utils.toArray(".work-box");
         
         projectCards.forEach(card => {
-          // Changed from .from() to .to() to animate from the state defined in CSS
+          // Animate from the state defined in CSS to the final state
           gsap.to(card as HTMLElement, {
             opacity: 1,
             y: 0,
+            visibility: 'visible', // Explicitly make it visible
             duration: 0.6,
             ease: "power2.out",
             scrollTrigger: {
@@ -78,12 +79,12 @@ const Work = () => {
           });
         });
 
-        // This is the key fix: Force a refresh after a short delay.
-        // This gives the browser time to load images/fonts and ensures
-        // ScrollTrigger calculates the correct trigger points.
+        // BEST PRACTICE FIX: On mobile, images can cause layout shifts after
+        // the initial render. This forces ScrollTrigger to recalculate its
+        // trigger points after a short delay, ensuring they are accurate.
         setTimeout(() => {
           ScrollTrigger.refresh();
-        }, 300);
+        }, 500); // 500ms is a safe delay
       }
     });
   }, []);
