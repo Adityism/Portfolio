@@ -23,38 +23,31 @@ const Navbar = () => {
     smoother.scrollTop(0);
     smoother.paused(true);
 
-    let links = document.querySelectorAll(".header ul a");
+    const links = document.querySelectorAll(".header ul a");
     links.forEach((elem) => {
-      let element = elem as HTMLAnchorElement;
+      const element = elem as HTMLAnchorElement;
       element.addEventListener("click", (e) => {
         if (window.innerWidth > 1024) {
           e.preventDefault();
-          let elem = e.currentTarget as HTMLAnchorElement;
-          let section = elem.getAttribute("data-href");
+          const section = element.getAttribute("data-href");
           smoother.scrollTo(section, true, "top top");
         }
       });
     });
+
     window.addEventListener("resize", () => {
       ScrollSmoother.refresh(true);
     });
   }, []);
+
   return (
     <>
       <div className="header">
-        <a href="/#" className="navbar-title" data-cursor="disable">
-          <img
-            src="/public/images/logo.webp"
-            alt="logo"
-            style={{
-              height: "72px",
-              width: "auto",
-              verticalAlign: "middle",
-            }}
-          />
+        <a href="/" className="navbar-title" data-cursor="disable">
+          Adityism
         </a>
         <a
-          href="mailto:example@mail.com"
+          href="mailto:adityism@gmail.com"
           className="navbar-connect"
           data-cursor="disable"
         >

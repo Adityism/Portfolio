@@ -46,15 +46,7 @@ const Loading = ({ percent }: { percent: number }) => {
     <>
       <div className="loading-header">
         <a href="/#" className="loader-title" data-cursor="disable">
-          <img
-            src="/public/images/logo.webp"
-            alt="logo"
-            style={{
-              height: "32px",
-              width: "auto",
-              verticalAlign: "middle",
-            }}
-          />
+          Adityism
         </a>
         <div className={`loaderGame ${clicked && "loader-out"}`}>
           <div className="loaderGame-container">
