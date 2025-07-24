@@ -29,15 +29,7 @@
   gap: 30px;
   padding: 40px 0;
   border-bottom: 1px solid #363636;
-  
-  /* BEST PRACTICE FIX: Set initial state in CSS to prevent mobile rendering bugs */
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(50px);
-  /* Force hardware acceleration on Safari */
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  will-change: opacity, transform;
+  /* NO initial opacity or transform - cards are visible by default */
 }
 
 .work-box:last-child {
@@ -142,13 +134,6 @@
     box-sizing: border-box;
     will-change: transform;
     padding: 0;
-  }
-  
-  /* Reset the initial state for desktop, as it's not needed here */
-  .work-box {
-    opacity: 1;
-    visibility: visible;
-    transform: none;
   }
 
   .work-section h2 {

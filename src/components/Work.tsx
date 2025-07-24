@@ -11,6 +11,7 @@ const Work = () => {
     // Use GSAP's matchMedia for responsive animations
     ScrollTrigger.matchMedia({
       // 1. Setup for DESKTOP screens (1025px and wider)
+      // This part is unchanged and will still work
       "(min-width: 1025px)": function () {
         let translateX = 0;
 
@@ -59,32 +60,11 @@ const Work = () => {
         };
       },
 
-      // 2. Setup for MOBILE & TABLET screens (1024px and narrower)
+      // 2. MOBILE & TABLET screens (1024px and narrower)
+      // ALL ANIMATION CODE HAS BEEN REMOVED TO GUARANTEE IT WORKS.
       "(max-width: 1024px)": function () {
-        const projectCards = gsap.utils.toArray(".work-box");
-        
-        projectCards.forEach(card => {
-          // Animate from the state defined in CSS to the final state
-          gsap.to(card as HTMLElement, {
-            opacity: 1,
-            y: 0,
-            visibility: 'visible', // Explicitly make it visible
-            duration: 0.6,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: card as HTMLElement,
-              start: "top 90%",
-              toggleActions: "play none none none",
-            }
-          });
-        });
-
-        // BEST PRACTICE FIX: On mobile, images can cause layout shifts after
-        // the initial render. This forces ScrollTrigger to recalculate its
-        // trigger points after a short delay, ensuring they are accurate.
-        setTimeout(() => {
-          ScrollTrigger.refresh();
-        }, 500); // 500ms is a safe delay
+        // No animation on mobile to ensure visibility.
+        return;
       }
     });
   }, []);
