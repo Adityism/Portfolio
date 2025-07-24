@@ -14,7 +14,6 @@ const Work = () => {
       "(min-width: 1025px)": function () {
         let translateX = 0;
 
-        // Function to calculate the total horizontal scroll distance
         function setTranslateX() {
           const boxes = document.getElementsByClassName("work-box");
           if (boxes.length === 0) return;
@@ -39,7 +38,6 @@ const Work = () => {
         const workSectionHeight = window.innerHeight;
         const properEndValue = translateX + workSectionHeight;
 
-        // The timeline for the horizontal scroll animation
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: ".work-section",
@@ -48,14 +46,13 @@ const Work = () => {
             scrub: true,
             pin: true,
             pinSpacing: true,
-            id: "work-desktop", // Unique ID for this trigger
-            invalidateOnRefresh: true, // Recalculates on resize
+            id: "work-desktop",
+            invalidateOnRefresh: true,
           },
         });
 
         tl.to(".work-flex", { x: -translateX, ease: "none" });
 
-        // Cleanup function for when the media query no longer matches
         return () => {
           tl.kill();
           ScrollTrigger.getById("work-desktop")?.kill();
@@ -64,23 +61,29 @@ const Work = () => {
 
       // 2. Setup for MOBILE & TABLET screens (1024px and narrower)
       "(max-width: 1024px)": function () {
-        // Select all the project cards
         const projectCards = gsap.utils.toArray(".work-box");
         
-        // Apply a reveal animation to each card
         projectCards.forEach(card => {
-          gsap.from(card as HTMLElement, {
-            opacity: 0,
-            y: 50, // Start 50px down
+          // Changed from .from() to .to() to animate from the state defined in CSS
+          gsap.to(card as HTMLElement, {
+            opacity: 1,
+            y: 0,
             duration: 0.6,
             ease: "power2.out",
             scrollTrigger: {
               trigger: card as HTMLElement,
-              start: "top 90%", // Trigger when the top of the card is 90% down the viewport
-              toggleActions: "play none none none", // Play the animation once
+              start: "top 90%",
+              toggleActions: "play none none none",
             }
           });
         });
+
+        // This is the key fix: Force a refresh after a short delay.
+        // This gives the browser time to load images/fonts and ensures
+        // ScrollTrigger calculates the correct trigger points.
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 300);
       }
     });
   }, []);

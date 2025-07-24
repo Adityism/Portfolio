@@ -29,6 +29,10 @@
   gap: 30px;
   padding: 40px 0;
   border-bottom: 1px solid #363636;
+  /* This is the key fix: Set initial state for the animation in CSS */
+  opacity: 0;
+  transform: translateY(50px);
+  will-change: opacity, transform;
 }
 
 .work-box:last-child {
@@ -133,6 +137,12 @@
     box-sizing: border-box;
     will-change: transform;
     padding: 0;
+  }
+  
+  /* Reset the initial state for desktop, as it's not needed here */
+  .work-box {
+    opacity: 1;
+    transform: none;
   }
 
   .work-section h2 {
