@@ -8,56 +8,81 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const Work = () => {
   useGSAP(() => {
-    let translateX = 0;
+    // Use GSAP's matchMedia for responsive animations
+    ScrollTrigger.matchMedia({
+      // 1. Setup for DESKTOP screens (1025px and wider)
+      "(min-width: 1025px)": function () {
+        let translateX = 0;
 
-    function setTranslateX() {
-      const boxes = document.getElementsByClassName("work-box");
-      const containerLeft = document
-        .querySelector(".work-container")!
-        .getBoundingClientRect().left;
-      const boxRect = (boxes[0] as HTMLElement).getBoundingClientRect();
-      const parentWidth = (boxes[0] as HTMLElement).parentElement!
-        .getBoundingClientRect().width;
-      const padding = parseInt(
-        window.getComputedStyle(boxes[0] as HTMLElement).padding || "0"
-      ) / 2;
-      translateX =
-        boxRect.width * boxes.length - (containerLeft + parentWidth) + padding;
-    }
+        // Function to calculate the total horizontal scroll distance
+        function setTranslateX() {
+          const boxes = document.getElementsByClassName("work-box");
+          if (boxes.length === 0) return;
+          const containerLeft = document
+            .querySelector(".work-container")!
+            .getBoundingClientRect().left;
+          const boxRect = (boxes[0] as HTMLElement).getBoundingClientRect();
+          const parentWidth = (boxes[0] as HTMLElement).parentElement!
+            .getBoundingClientRect().width;
+          const padding =
+            parseInt(
+              window.getComputedStyle(boxes[0] as HTMLElement).paddingLeft || "0"
+            ) / 2;
+          translateX =
+            boxRect.width * boxes.length -
+            (containerLeft + parentWidth) +
+            padding;
+        }
 
-    setTranslateX();
+        setTranslateX();
 
-    const workSectionHeight = window.innerHeight;
-    const properEndValue = translateX + workSectionHeight;
+        const workSectionHeight = window.innerHeight;
+        const properEndValue = translateX + workSectionHeight;
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".work-section",
-        start: "top top",
-        end: `+=${properEndValue}`,
-        scrub: true,
-        pin: true,
-        pinSpacing: true,
-        id: "work",
-        invalidateOnRefresh: true,
-        onRefresh: setTranslateX,
+        // The timeline for the horizontal scroll animation
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: ".work-section",
+            start: "top top",
+            end: `+=${properEndValue}`,
+            scrub: true,
+            pin: true,
+            pinSpacing: true,
+            id: "work-desktop", // Unique ID for this trigger
+            invalidateOnRefresh: true, // Recalculates on resize
+          },
+        });
+
+        tl.to(".work-flex", { x: -translateX, ease: "none" });
+
+        // Cleanup function for when the media query no longer matches
+        return () => {
+          tl.kill();
+          ScrollTrigger.getById("work-desktop")?.kill();
+        };
       },
+
+      // 2. Setup for MOBILE & TABLET screens (1024px and narrower)
+      "(max-width: 1024px)": function () {
+        // Select all the project cards
+        const projectCards = gsap.utils.toArray(".work-box");
+        
+        // Apply a reveal animation to each card
+        projectCards.forEach(card => {
+          gsap.from(card as HTMLElement, {
+            opacity: 0,
+            y: 50, // Start 50px down
+            duration: 0.6,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: card as HTMLElement,
+              start: "top 90%", // Trigger when the top of the card is 90% down the viewport
+              toggleActions: "play none none none", // Play the animation once
+            }
+          });
+        });
+      }
     });
-
-    tl.to(".work-flex", { x: -translateX, ease: "none" });
-
-    const handleResize = () => {
-      setTranslateX();
-      ScrollTrigger.refresh();
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      tl.kill();
-      ScrollTrigger.getById("work")?.kill();
-      window.removeEventListener("resize", handleResize);
-    };
   }, []);
 
   const projects = [

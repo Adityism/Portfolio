@@ -1,68 +1,81 @@
+/* --- Base Mobile Styles --- */
 .about-section {
   display: flex;
   align-items: center;
-  justify-content: left;
-  place-items: center;
+  justify-content: center; /* Center content on mobile */
   position: relative;
-  opacity: 1;
-  height: auto;
   width: var(--cWidth);
   margin: auto;
+  padding: 100px 0; /* Ensures the section has good vertical space on mobile */
+  height: auto;
 }
+
 .about-me {
-  padding: 50px 0px;
-  padding-bottom: 0;
-  width: 500px;
-  max-width: calc(100% - 15px);
+  width: 100%;
+  max-width: 500px;
+  text-align: left; /* Keep text left-aligned for a professional look */
 }
+
 .about-me h3 {
-  font-size: 25px;
+  font-size: 22px; /* Adjusted for mobile */
   text-transform: uppercase;
-  letter-spacing: 7px;
+  letter-spacing: 6px;
   font-weight: 400;
   color: var(--accentColor);
+  margin-bottom: 24px;
 }
 
 .about-me p {
-  font-size: 33px;
-  font-weight: 600;
-  line-height: 36px;
-  letter-spacing: 1px;
+  font-size: 18px; /* More readable font size for mobile */
+  font-weight: 400; /* Lighter weight for better readability */
+  line-height: 1.7; /* Improved line spacing for easier reading */
+  letter-spacing: 0.5px;
+  color: #e5e7eb; /* Softer white for less harshness on the eyes */
 }
 
-@media only screen and (min-width: 600px) {
-  .about-section {
-    justify-content: center;
-  }
-}
+/* --- Tablet Styles --- */
 @media only screen and (min-width: 768px) {
   .about-me {
     width: 500px;
     max-width: calc(100% - 70px);
-    transform: translateY(0%);
   }
-  .about-section {
-    opacity: 1;
+
+  .about-me p {
+    font-size: 24px; /* Increase size for tablets */
+    line-height: 1.6;
   }
 }
+
+/* --- Desktop Styles (Your original styles, preserved) --- */
 @media only screen and (min-width: 1025px) {
   .about-section {
     width: var(--cWidth);
-    justify-content: right;
+    justify-content: right; /* Revert to your original right alignment */
     max-width: 1920px;
     height: var(--vh);
     padding: 0px;
     opacity: 1;
   }
+
   .about-me {
     padding: 0px;
     width: 50%;
   }
+
+  .about-me h3 {
+    font-size: 25px; /* Restore original size */
+    letter-spacing: 7px;
+  }
+
   .about-me p {
-    font-size: 1.9vw;
+    font-size: 1.9vw; /* Restore original vw sizing */
     line-height: 2.3vw;
+    font-weight: 600; /* Restore original bold weight */
+    color: white; /* Restore original color */
   }
 }
+
+/* --- Extra Large Desktop (Your original styles, preserved) --- */
 @media only screen and (min-width: 1950px) {
   .about-me p {
     font-size: 2.5rem;

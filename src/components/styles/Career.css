@@ -74,6 +74,15 @@
   margin: 10px 0px;
   color: var(--accentColor);
 }
+
+/* --- ADDED THIS NEW RULE FOR THE DATE --- */
+.career-date-inline {
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
 .career-timeline {
   position: absolute;
   top: -50px;
@@ -156,6 +165,12 @@
 
   .career-info-box p {
     width: 45%;
+  }
+}
+@media only screen and (min-width: 1025px) {
+  /* --- ADDED THIS TO ADJUST DATE ON DESKTOP --- */
+  .career-date-inline {
+    font-size: 16px;
   }
 }
 @media only screen and (max-width: 1025px) {
